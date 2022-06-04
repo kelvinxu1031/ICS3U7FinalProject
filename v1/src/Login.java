@@ -11,7 +11,7 @@ public class Login extends JFrame implements ActionListener{
 	private JButton resetPass = new JButton("Reset Password");
 	private JTextField uText = new JTextField();
 	private JPasswordField pText = new JPasswordField();
-	
+
 	private static String file = "accounts.txt";
 	private static String[][] accounts = new String[2][1000];
 	private String[] usernames;
@@ -19,7 +19,7 @@ public class Login extends JFrame implements ActionListener{
 	private static int numOfUsers;
 	public static String currUser;
 	public static String currPass;
-	
+
 	public Login(String title) throws IOException{
 		BufferedReader in = new BufferedReader(new FileReader(file));
 		usernames = in.readLine().split(" ");
@@ -29,15 +29,17 @@ public class Login extends JFrame implements ActionListener{
 			accounts[0][i] = usernames[i];
 			accounts[1][i] = passwords[i];
 		}
-		
+
 		loginF = new JFrame(title);
 		loginF.setLayout(null);
 		enter.addActionListener(this);
 		createAcc.addActionListener(this);
+		resetPass.addActionListener(this);
 		top.add(new JLabel("Username:"));
 		top.add(uText);
 		top.add(new JLabel("Password:"));
 		top.add(pText);
+		bottom.add(resetPass);
 		bottom.add(createAcc);
 		bottom.add(enter);
 		loginF.add(top, BorderLayout.CENTER);
@@ -48,6 +50,7 @@ public class Login extends JFrame implements ActionListener{
 		loginF.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		loginF.setLocationRelativeTo(null);
 		loginF.setVisible(true);
+		in.close();
 	}
 
 	public boolean isUser(String user, String pass) {
@@ -58,7 +61,7 @@ public class Login extends JFrame implements ActionListener{
 		}
 		return false;
 	}
-	
+
 	public boolean foundUser(String user) {
 		for (int i = 0; i<numOfUsers;i++) {
 			if (accounts[0][i].equals(user.trim())){
@@ -67,54 +70,60 @@ public class Login extends JFrame implements ActionListener{
 		}
 		return false;
 	}
-	
+
 	public static String getUser() {
 		return currUser;
 	}
-	
+
 	public void setUser(String user) {
 		currUser = user;
 	}
 	public static String getPass() {
 		return currPass;
 	}
-	
+
 	public void setPass(String pass) {
 		currPass = pass;
 	}
-	
-	
+
+
 	@SuppressWarnings("deprecation")
 	public void actionPerformed(ActionEvent e){
-		if (e.getSource() == enter) {
-			String user = uText.getText();
-			String pass = pText.getText();
-			if(isUser(user,pass)) {
-				setUser(user);
-				setPass(pass);
-				JOptionPane.showMessageDialog(this, "Access Granted!");
+		try {
+			if (e.getSource() == enter) {
+				String user = uText.getText();
+				String pass = pText.getText();
+				if(isUser(user,pass)) {
+					setUser(user);
+					setPass(pass);
+					JOptionPane.showMessageDialog(this, "Access Granted!");
+					loginF.dispose();
+					JFrame mainMenuF = new MainMenu("WELCOME TO THE ARCADE");
+				}
+				else if(foundUser(user)) {
+					uText.setText("");
+					pText.setText("");
+					JOptionPane.showMessageDialog(this, "Error: Incorrect password");
+				}
+				else {
+					uText.setText("");
+					pText.setText("");
+					JOptionPane.showMessageDialog(this, "Error: Account not created with this username");
+				}
+
+			}
+			if(e.getSource() == createAcc) {
 				loginF.dispose();
-				JFrame mainMenuF = new MainMenu("WELCOME TO THE ARCADE");
-			}
-			else if(foundUser(user)) {
-				uText.setText("");
-				pText.setText("");
-				JOptionPane.showMessageDialog(this, "Error: Incorrect password");
-			}
-			else {
-				uText.setText("");
-				pText.setText("");
-				JOptionPane.showMessageDialog(this, "Error: Incorrect username and password combination");
-			}
-			
-		}
-		if(e.getSource() == createAcc) {
-			loginF.dispose();
-			try {
 				JFrame createAccF = new CreateAcc("CREATE ACCOUNT");
-			} catch (IOException e1) {
-				System.out.println("Error with file io!");
 			}
+			if(e.getSource() == resetPass) {
+				System.out.println("resetpassbuttonclicked");
+				loginF.dispose();
+				JFrame resetPassF = new ResetPass("RESET PASSWORD");
+			}
+		}
+		catch (IOException e1) {
+			System.out.println("Error with file io!");
 		}
 	}
 
