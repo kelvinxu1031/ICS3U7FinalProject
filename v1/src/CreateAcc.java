@@ -2,8 +2,6 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.io.*;
-import java.util.List;
-import java.util.*;
 public class CreateAcc extends JFrame implements ActionListener{
 	private static JFrame createAccF;
 	
@@ -51,7 +49,7 @@ public class CreateAcc extends JFrame implements ActionListener{
 		createAccF.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		createAccF.setLocationRelativeTo(null);
 		createAccF.setVisible(true);
-
+		in.close();
 	}
 	
 	public void createUser(String username, String password){
