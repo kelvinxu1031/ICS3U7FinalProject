@@ -2,25 +2,38 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+
+/**
+ * This program allows the user to login to access the game, create an account, or reset a password
+ * Author: Kelvin Xu
+ *Date: June 7, 2022
+ */
 public class Login extends JFrame implements ActionListener{
-	private static JFrame loginF;
-	private JPanel top = new JPanel(new GridLayout(2,2));
-	private JPanel bottom = new JPanel(new GridLayout(1,3));
-	private JButton enter = new JButton("Enter");
-	private JButton createAcc = new JButton("Create Account");
-	private JButton resetPass = new JButton("Reset Password");
-	private JTextField uText = new JTextField();
-	private JPasswordField pText = new JPasswordField();
+	//DECLARATION OF VARIABLES
 
-	private static String file = "accounts.txt";
-	private static String[][] accounts = new String[2][1000];
-	private String[] usernames;
-	private String[] passwords;
-	private static int numOfUsers;
-	public static String currUser;
-	public static String currPass;
-
-	public Login(String title) throws IOException{
+	//components for GUI
+	private static JFrame     loginF;
+	private JPanel            backgroundP;
+	private JButton           enter;
+	private JButton           createAcc;
+	private JButton           resetPass;
+	private JTextField        uText;
+	private JPasswordField    pText;
+	private JLabel            lblUser;
+	private JLabel            lblPass;
+	//file IO variables
+	private final static int  CAP = 1000;
+	private static String     file = "accounts.txt";
+	private static String[][] accounts = new String[2][CAP];
+	private String[]          usernames;
+	private String[]          passwords;
+	private static int        numOfUsers;
+	public static String      currUser;
+	public static String      currPass;
+	//font files
+	String fName = "fonts/titleFont.ttf";
+	public Login(String title) throws Exception{
+		//read input from "accounts.txt"
 		BufferedReader in = new BufferedReader(new FileReader(file));
 		usernames = in.readLine().split(" ");
 		passwords = in.readLine().split(" ");
@@ -30,24 +43,45 @@ public class Login extends JFrame implements ActionListener{
 			accounts[1][i] = passwords[i];
 		}
 
-		loginF = new JFrame(title);
-		loginF.setLayout(null);
-		enter.addActionListener(this);
-		createAcc.addActionListener(this);
-		resetPass.addActionListener(this);
-		top.add(new JLabel("Username:"));
-		top.add(uText);
-		top.add(new JLabel("Password:"));
-		top.add(pText);
-		bottom.add(resetPass);
-		bottom.add(createAcc);
-		bottom.add(enter);
-		loginF.add(top, BorderLayout.CENTER);
-		top.setBounds(0,0,800,300);
-		loginF.add(bottom, BorderLayout.SOUTH);
-		bottom.setBounds(0,300, 800, 100);
+		//instantiating components for GUI
+		loginF    = new JFrame(title);
+		backgroundP = new JPanel();
+		lblUser   = new JLabel("Username: ");
+		lblUser.setBounds(100,100, 100,25);
+		lblPass   = new JLabel("Password:");
+		lblPass.setBounds(100,200,100,25);
+		enter     = new JButton("ENTER");
+		enter.setBounds(100,300,200,75);
+		createAcc = new JButton("CREATE ACCOUNT");
+		createAcc.setBounds(300,300,200,75);
+		resetPass = new JButton("RESET PASSWORD");
+		resetPass.setBounds(500,300,200,75);
+		uText     = new JTextField();
+		uText.setBounds(300,100,400,25);
+		pText     = new JPasswordField();
+		pText.setBounds(300,200,400,25);
+
+		//set the layout for the background
+
+		//add functionality to buttons
+		createButton(enter);
+		createButton(createAcc);
+		createButton(resetPass);
+
+		//adding components to JFrame
+		backgroundP.setLayout(null);
+		backgroundP.setSize(800,400);
+		backgroundP.add(lblUser);
+		backgroundP.add(uText);
+		backgroundP.add(lblPass);
+		backgroundP.add(pText);
+		backgroundP.add(resetPass);
+		backgroundP.add(createAcc);
+		backgroundP.add(enter);
+		loginF.add(backgroundP);
 		loginF.setSize(800,400);
 		loginF.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		loginF.setLayout(null);
 		loginF.setLocationRelativeTo(null);
 		loginF.setVisible(true);
 		in.close();
@@ -62,6 +96,14 @@ public class Login extends JFrame implements ActionListener{
 		return false;
 	}
 
+	public void createButton(JButton b) throws Exception{
+		//import fonts
+		Font font = Font.createFont(Font.TRUETYPE_FONT, new File(fName)).deriveFont(12f);
+	    GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+	    ge.registerFont(font);
+		b.addActionListener(this);
+		b.setFont(font);
+	}
 	public boolean foundUser(String user) {
 		for (int i = 0; i<numOfUsers;i++) {
 			if (accounts[0][i].equals(user.trim())){
