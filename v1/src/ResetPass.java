@@ -128,15 +128,15 @@ public class ResetPass extends JFrame implements ActionListener{
 				else {
 					updateInfo(user, pass);
 					resetPassF.dispose();
-					JFrame loginF = new Login("LOGIN");
+					Login loginF = new Login("LOGIN");
 				}
 			}
 			else {
 				saveUsers();
 				resetPassF.dispose();
-				JFrame loginF = new Login("LOGIN");
+				Login loginF = new Login("LOGIN");
 			}
-		}catch(IOException e1) {
+		}catch(Exception e1) {
 			System.out.println("Error with file IO");
 		}
 		
