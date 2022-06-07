@@ -4,14 +4,14 @@ import javax.swing.*;
 import java.io.*;
 public class CreateAcc extends JFrame implements ActionListener{
 	private static JFrame createAccF;
-	
+
 	//file IO variables
 	private static String file = "accounts.txt";
 	private static String[][] accounts = new String[2][1000];
 	private String[] usernames;
 	private String[] passwords;
 	private static int numOfUsers;
-	
+
 	private JPanel loginInfo = new JPanel(new GridLayout(2,2));
 	private JPanel buttons = new JPanel(new GridLayout(1,2));
 	private JLabel username = new JLabel("USERNAME");
@@ -21,7 +21,7 @@ public class CreateAcc extends JFrame implements ActionListener{
 	private JButton enter = new JButton("ENTER");
 	private JButton back = new JButton("BACK");
 
-	
+
 	public CreateAcc(String title) throws IOException {
 		BufferedReader in = new BufferedReader(new FileReader(file));
 		usernames = in.readLine().split(" ");
@@ -31,8 +31,8 @@ public class CreateAcc extends JFrame implements ActionListener{
 			accounts[0][i] = usernames[i];
 			accounts[1][i] = passwords[i];
 		}
-		
-		
+
+
 		createAccF = new JFrame(title);
 		createAccF.setLayout(new BorderLayout());
 		loginInfo.add(username);
@@ -51,13 +51,13 @@ public class CreateAcc extends JFrame implements ActionListener{
 		createAccF.setVisible(true);
 		in.close();
 	}
-	
+
 	public void createUser(String username, String password){
 		accounts[0][numOfUsers] = username;
 		accounts[1][numOfUsers] = password;
 		numOfUsers++;
 	}
-	
+
 	public boolean isRegistered(String username) throws IOException{
 		for(int i = 0; i<numOfUsers;i++) {
 			if (accounts[0][i].equals(username)) {
@@ -66,7 +66,7 @@ public class CreateAcc extends JFrame implements ActionListener{
 		}
 		return false;
 	}
-	
+
 	public static void saveUsers() throws IOException{
 		BufferedWriter out = new BufferedWriter(new FileWriter(file));
 		for(int i = 0; i<numOfUsers;i++) {
@@ -80,7 +80,7 @@ public class CreateAcc extends JFrame implements ActionListener{
 		}
 		out.close();
 	}
-	
+
 	public void actionPerformed(ActionEvent e){
 		if (e.getSource() == enter) {
 			String user = uText.getText();
@@ -90,23 +90,20 @@ public class CreateAcc extends JFrame implements ActionListener{
 					uText.setText("");
 					pText.setText("");
 					JOptionPane.showMessageDialog(this, "Error: An account with this username already exists.");
-					
+
 				}
 				else {
 					createUser(user, pass);
 					CreateAcc.saveUsers();
 					createAccF.dispose();
-					JFrame loginF = new Login("LOGIN");
+					Login loginF = new Login("LOGIN");
 				}
-			} catch (IOException e1) {
-				System.out.println("Error with file io!");;
-			}
-		}
-		if(e.getSource() == back) {
-			createAccF.dispose();
-			try {
-				JFrame loginF = new Login("LOGIN");
-			} catch (IOException e1) {
+
+				if(e.getSource() == back) {
+					createAccF.dispose();
+					Login loginF = new Login("LOGIN");
+				} 
+			}catch (Exception e1) {
 				System.out.println("Error with file IO");
 			}
 		}
