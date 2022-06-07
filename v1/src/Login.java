@@ -14,6 +14,7 @@ public class Login extends JFrame implements ActionListener{
 	//components for GUI
 	private static JFrame     loginF;
 	private JPanel            backgroundP;
+	private JLabel            lblTitle;
 	private JButton           enter;
 	private JButton           createAcc;
 	private JButton           resetPass;
@@ -30,9 +31,17 @@ public class Login extends JFrame implements ActionListener{
 	private static int        numOfUsers;
 	public static String      currUser;
 	public static String      currPass;
+	
 	//font files
-	String fName = "fonts/titleFont.ttf";
+	String titleFontName = "fonts/titleFont.ttf";
+	String textFontName = "fonts/textFont.ttf";
+	
 	public Login(String title) throws Exception{
+		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		Font textFont = Font.createFont(Font.TRUETYPE_FONT, new File(textFontName)).deriveFont(12f);
+	    ge.registerFont(textFont);
+	    Font titleFont = Font.createFont(Font.TRUETYPE_FONT, new File(titleFontName)).deriveFont(50f);
+	    ge.registerFont(titleFont);
 		//read input from "accounts.txt"
 		BufferedReader in = new BufferedReader(new FileReader(file));
 		usernames = in.readLine().split(" ");
@@ -44,25 +53,31 @@ public class Login extends JFrame implements ActionListener{
 		}
 
 		//instantiating components for GUI
-		loginF    = new JFrame(title);
+		loginF      = new JFrame(title);
 		backgroundP = new JPanel();
-		lblUser   = new JLabel("Username: ");
-		lblUser.setBounds(100,100, 100,25);
-		lblPass   = new JLabel("Password:");
-		lblPass.setBounds(100,200,100,25);
-		enter     = new JButton("ENTER");
-		enter.setBounds(100,300,200,75);
-		createAcc = new JButton("CREATE ACCOUNT");
-		createAcc.setBounds(300,300,200,75);
-		resetPass = new JButton("RESET PASSWORD");
-		resetPass.setBounds(500,300,200,75);
-		uText     = new JTextField();
-		uText.setBounds(300,100,400,25);
-		pText     = new JPasswordField();
-		pText.setBounds(300,200,400,25);
-
-		//set the layout for the background
-
+		lblTitle    = new JLabel("ARCADE");
+		lblUser     = new JLabel("Username: ");
+		lblPass     = new JLabel("Password:");
+		uText       = new JTextField();
+		pText       = new JPasswordField();
+		enter       = new JButton("ENTER");
+		createAcc   = new JButton("CREATE ACCOUNT");
+		resetPass   = new JButton("RESET PASSWORD");
+		
+		//formatting for components
+		lblTitle.setFont(titleFont);
+		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitle.setBounds(100, 50, 520, 50);
+		lblUser.setFont(textFont);
+		lblUser.setBounds(50,150, 150,25);
+		lblPass.setFont(textFont);
+		lblPass.setBounds(50,250,150,25);
+		uText.setBounds(200,150,470,25);
+		pText.setBounds(200,250,470,25);
+		enter.setBounds(30,325,200,50);
+		createAcc.setBounds(250,325,200,50);
+		resetPass.setBounds(470,325,200,50);
+		
 		//add functionality to buttons
 		createButton(enter);
 		createButton(createAcc);
@@ -71,6 +86,7 @@ public class Login extends JFrame implements ActionListener{
 		//adding components to JFrame
 		backgroundP.setLayout(null);
 		backgroundP.setSize(800,400);
+		backgroundP.add(lblTitle);
 		backgroundP.add(lblUser);
 		backgroundP.add(uText);
 		backgroundP.add(lblPass);
@@ -79,7 +95,7 @@ public class Login extends JFrame implements ActionListener{
 		backgroundP.add(createAcc);
 		backgroundP.add(enter);
 		loginF.add(backgroundP);
-		loginF.setSize(800,400);
+		loginF.setSize(720,450);
 		loginF.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		loginF.setLayout(null);
 		loginF.setLocationRelativeTo(null);
@@ -98,7 +114,7 @@ public class Login extends JFrame implements ActionListener{
 
 	public void createButton(JButton b) throws Exception{
 		//import fonts
-		Font font = Font.createFont(Font.TRUETYPE_FONT, new File(fName)).deriveFont(12f);
+		Font font = Font.createFont(Font.TRUETYPE_FONT, new File(titleFontName)).deriveFont(12f);
 	    GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 	    ge.registerFont(font);
 		b.addActionListener(this);
@@ -164,7 +180,7 @@ public class Login extends JFrame implements ActionListener{
 				JFrame resetPassF = new ResetPass("RESET PASSWORD");
 			}
 		}
-		catch (IOException e1) {
+		catch (Exception e1) {
 			System.out.println("Error with file io!");
 		}
 	}
