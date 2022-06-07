@@ -45,8 +45,8 @@ public class MainMenu extends JFrame implements ActionListener{
 		else {
 			mainMenuF.dispose();
 			try {
-				JFrame loginF = new Login("LOGIN");
-			} catch (IOException e1) {
+				Login loginF = new Login("LOGIN");
+			} catch (Exception e1) {
 				System.out.println("Error with file IO");
 			}
 		}
