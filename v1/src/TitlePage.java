@@ -1,47 +1,100 @@
 /**
  * Title page for arcade program
- *
- * @author laiba
+ * @author Laiba Y. & Kelvin X.
  *
  */
+
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
+import java.awt.event.*;
 
 
-public class TitlePage extends JFrame {
+public class TitlePage extends JFrame implements ActionListener{
+	//declaration of components for GUI
+	private JFrame titlePageF;
+	private JLabel background;
+	private JLabel lblTitle;
+	private JButton login;
+	private JButton exit;
+	private ImageIcon img;
+	private String imgName = "images/titleBackground.jpg";
 
-	TitlePage(){
+	//font files
+	String titleFontName = "fonts/titleFont.ttf";
+	String textFontName = "fonts/textFont.ttf";
 
-		JLabel background;
-		setSize(4000,4000);
-		setLayout(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		ImageIcon img = new ImageIcon("ArcadeGame1.jpg");
-		img.setImage(img.getImage().getScaledInstance(1200,1200,Image.SCALE_DEFAULT));
+	public TitlePage(String title) throws Exception{
+		//import fonts
+		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		Font textFont = Font.createFont(Font.TRUETYPE_FONT, new File(textFontName)).deriveFont(12f);
+		ge.registerFont(textFont);
+		Font titleFont = Font.createFont(Font.TRUETYPE_FONT, new File(titleFontName)).deriveFont(50f);
+		ge.registerFont(titleFont);
 
+		//instantiation of GUI components
+		titlePageF = new JFrame(title);
+		img = new ImageIcon(this.getClass().getResource(imgName));
+		background = new JLabel(img);
+		lblTitle = new JLabel("ARCADE");
+		login = new JButton("LOGIN");
+		exit = new JButton("EXIT");
 
-		background = new JLabel("",img,JLabel.CENTER);
-		background.setBounds(0,0,1200,700);
-		add(background);
-		setVisible(true);
-		
-		//Main Menu Button
-		JButton b = new JButton("Main Menu");
-		b.setBounds(550,300,150,80);
-		add(b);
+		//giving functionality to buttons
+		createButton(login);
+		createButton(exit);
 
+		//formatting of components
+		titlePageF.setLayout(null);
+		background.setSize(720,470);
+		lblTitle.setFont(titleFont);
+		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitle.setBounds(50, 50, 620, 50);
+		login.setBounds(30,325,320,50);
+		exit.setBounds(370,325,320,50);
+
+		//add components to JFrame & display
+		background.add(lblTitle);
+		background.add(login);
+		background.add(exit);
+		titlePageF.add(background);
+		titlePageF.setSize(720,470);
+		titlePageF.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		titlePageF.setLocationRelativeTo(null);
+		titlePageF.setVisible(true);
 	}
-	
+
 	/**
-	 * main method
-	 * @param args
+	 * This method takes a button and adds an action listener 
+	 * as well as sets the font for the button
+	 * @param b A button
+	 * @throws Exception font exception
 	 */
-	public static void main(String[]args) {
-		TitlePage m = new TitlePage();
-	
+	public void createButton(JButton b) throws Exception{
+		//import fonts
+		Font font = Font.createFont(Font.TRUETYPE_FONT, new File(titleFontName)).deriveFont(12f);
+		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		ge.registerFont(font);
+		b.addActionListener(this);
+		b.setFont(font);
+	}
+
+	/**
+	 * This method detects user actions
+	 */
+	public void actionPerformed(ActionEvent e) {
+		try {
+			if(e.getSource()==exit) {
+				System.exit(0);
+			}
+			else {
+				titlePageF.dispose();
+				Login loginPageF = new Login("LOGIN");
+			}
+		}catch(Exception e1){
+			System.out.println("ERROR!");
+		}
 	}
 
 
 }
-
-

@@ -62,7 +62,7 @@ public class ResetPass extends JFrame implements ActionListener{
 		//formatting of components
 		resetPassF.setLayout(null);
 		backgroundP.setLayout(null);
-		backgroundP.setSize(720,450);
+		backgroundP.setSize(720,470);
 		lblTitle.setFont(titleFont);
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setBounds(50, 50, 620, 50);
@@ -92,7 +92,7 @@ public class ResetPass extends JFrame implements ActionListener{
 		backgroundP.add(enter);
 		backgroundP.add(back);
 		resetPassF.add(backgroundP);
-		resetPassF.setSize(720, 450);
+		resetPassF.setSize(720, 470);
 		resetPassF.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		resetPassF.setLocationRelativeTo(null);
 		resetPassF.setVisible(true);

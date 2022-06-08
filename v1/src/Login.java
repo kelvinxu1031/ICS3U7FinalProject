@@ -85,7 +85,7 @@ public class Login extends JFrame implements ActionListener{
 
 		//adding components to JFrame
 		backgroundP.setLayout(null);
-		backgroundP.setSize(800,400);
+		backgroundP.setSize(720, 470);
 		backgroundP.add(lblTitle);
 		backgroundP.add(lblUser);
 		backgroundP.add(uText);
@@ -95,7 +95,7 @@ public class Login extends JFrame implements ActionListener{
 		backgroundP.add(createAcc);
 		backgroundP.add(enter);
 		loginF.add(backgroundP);
-		loginF.setSize(720,450);
+		loginF.setSize(720,470);
 		loginF.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		loginF.setLayout(null);
 		loginF.setLocationRelativeTo(null);
@@ -120,6 +120,7 @@ public class Login extends JFrame implements ActionListener{
 		b.addActionListener(this);
 		b.setFont(font);
 	}
+	
 	public boolean foundUser(String user) {
 		for (int i = 0; i<numOfUsers;i++) {
 			if (accounts[0][i].equals(user.trim())){
