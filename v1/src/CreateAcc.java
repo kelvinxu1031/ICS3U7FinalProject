@@ -61,7 +61,7 @@ public class CreateAcc extends JFrame implements ActionListener{
 		//formatting of the components
 		createAccF.setLayout(null);
 		backgroundP.setLayout(null);
-		backgroundP.setSize(720,450);
+		backgroundP.setSize(720,470);
 		lblTitle.setFont(titleFont);
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setBounds(50, 50, 620, 50);
@@ -86,7 +86,7 @@ public class CreateAcc extends JFrame implements ActionListener{
 		backgroundP.add(enter);
 		backgroundP.add(back);
 		createAccF.add(backgroundP);
-		createAccF.setSize(720, 450);
+		createAccF.setSize(720, 470);
 		createAccF.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		createAccF.setLocationRelativeTo(null);
 		createAccF.setVisible(true);
@@ -168,6 +168,8 @@ public class CreateAcc extends JFrame implements ActionListener{
 				String pass = pText.getText();
 
 				if (pass.length()==0||user.length()==0) {
+					uText.setText("");
+					pText.setText("");
 					JOptionPane.showMessageDialog(this, "Error: Fill out both username and password fields.");
 				}
 				else if(isRegistered(user)) {
