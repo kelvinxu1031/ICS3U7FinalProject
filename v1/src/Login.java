@@ -29,8 +29,8 @@ public class Login extends JFrame implements ActionListener{
 	private String[]          usernames;
 	private String[]          passwords;
 	private static int        numOfUsers;
-	private static String      currUser;
-	private static String      currPass;
+	public static String      currUser;
+	public static String      currPass;
 	
 	//font files
 	String titleFontName = "fonts/titleFont.ttf";

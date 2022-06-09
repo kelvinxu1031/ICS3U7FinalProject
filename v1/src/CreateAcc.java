@@ -34,9 +34,10 @@ public class CreateAcc extends JFrame implements ActionListener{
 		//import fonts
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		Font textFont = Font.createFont(Font.TRUETYPE_FONT, new File(textFontName)).deriveFont(12f);
-		ge.registerFont(textFont);
 		Font titleFont = Font.createFont(Font.TRUETYPE_FONT, new File(titleFontName)).deriveFont(30f);
+		ge.registerFont(textFont);
 		ge.registerFont(titleFont);
+		
 		//read input from "accounts.txt"
 		BufferedReader in = new BufferedReader(new FileReader(file));
 		usernames = in.readLine().split(" ");

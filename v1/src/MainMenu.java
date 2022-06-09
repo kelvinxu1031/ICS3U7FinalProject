@@ -87,6 +87,7 @@ public class MainMenu extends JFrame implements ActionListener{
 			System.exit(0);
 		}
 		else {
+			System.out.println("BUTTON DOESN'T WORK PROPERLY YET");
 			mainMenuF.dispose();
 			try {
 				Login loginF = new Login("LOGIN");
